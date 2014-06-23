@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.ralfhortt.dandelion</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>5A1F228C-BAD2-4760-9E91-21BC1CB66D7F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>922E6801-9790-4890-941A-63735A88BFBE</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>63535D6A-DB65-4EA6-8C07-4364520EB39E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>71E9EC9D-AEF0-47AC-A12A-08DD2B787079</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>922E6801-9790-4890-941A-63735A88BFBE</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>72F70174-6015-40AF-9A76-BB6C4B877D8E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>CA3C1D83-33B8-429A-9E19-12EC47172B62</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>63535D6A-DB65-4EA6-8C07-4364520EB39E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Ralf Hortt</string>
+	<key>description</key>
+	<string>Dandelion Workflow for Alfred</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Dandelion</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>ddeploy</string>
+				<key>subtext</key>
+				<string>--project --revision</string>
+				<key>text</key>
+				<string>Dandelion Deploy</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>5A1F228C-BAD2-4760-9E91-21BC1CB66D7F</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Dandelion Deploy</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>72F70174-6015-40AF-9A76-BB6C4B877D8E</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string># Load profile
+cd ~/
+. .bash_profile
+
+# Load multiple parameters
+read PROJECT REVISION &lt;&lt;&lt; "{query}"
+
+# Go to project folder
+cd ~/Sites/$PROJECT
+
+# run Dandelion
+RESPONSE=$(dandelion deploy $REVISION)
+
+# Notification
+echo $RESPONSE</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>922E6801-9790-4890-941A-63735A88BFBE</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>dstatus</string>
+				<key>subtext</key>
+				<string>--project</string>
+				<key>text</key>
+				<string>Dandelion Status</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>CA3C1D83-33B8-429A-9E19-12EC47172B62</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string># Load profile
+cd ~/
+. .bash_profile
+
+# Go to project folder
+cd ~/Sites/{query}
+
+# Dendalion
+RESPONSE=$(dandelion status)
+
+# Notification
+echo $RESPONSE</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>63535D6A-DB65-4EA6-8C07-4364520EB39E</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Dandelion Status</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>71E9EC9D-AEF0-47AC-A12A-08DD2B787079</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string># Dandelion Workflow
+
+You might wanna change the path to your project folder
+
+## Requirement
+
+* Dandelion ( https://github.com/scttnlsn/dandelion )
+
+## Usage
+
+### ddeploy
+
+Runs `dandelion deploy`
+
+#### Paremeters
+$folder required
+$revision optional
+
+#### Example
+ddeploy horttcore
+
+### dstatus
+
+Runs `dandelion status`
+
+#### Parameters
+
+$folder required
+
+#### Example
+
+dstatus horttcore
+
+# Credits
+
+Dandelion:
+https://github.com/scttnlsn/dandelion
+
+Workflow:
+Ralf Hortt
+
+Icon:
+Dandelion designed by Ilsur Aptukov from the Noun Project
+http://thenounproject.com/term/dandelion/20016/</string>
+	<key>uidata</key>
+	<dict>
+		<key>5A1F228C-BAD2-4760-9E91-21BC1CB66D7F</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>63535D6A-DB65-4EA6-8C07-4364520EB39E</key>
+		<dict>
+			<key>ypos</key>
+			<real>190</real>
+		</dict>
+		<key>71E9EC9D-AEF0-47AC-A12A-08DD2B787079</key>
+		<dict>
+			<key>ypos</key>
+			<real>190</real>
+		</dict>
+		<key>72F70174-6015-40AF-9A76-BB6C4B877D8E</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>922E6801-9790-4890-941A-63735A88BFBE</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>CA3C1D83-33B8-429A-9E19-12EC47172B62</key>
+		<dict>
+			<key>ypos</key>
+			<real>190</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://horttcore.de</string>
+</dict>
+</plist>
